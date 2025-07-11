@@ -9,11 +9,24 @@ public class PriorityQueueTests
     // Scenario: 
     // Expected Result: 
     // Defect(s) Found: 
-    public void TestPriorityQueue_1()
-    {
-        var priorityQueue = new PriorityQueue();
-        Assert.Fail("Implement the test case and then remove this.");
-    }
+public void TestPriorityQueue_HigherPriorityRemovedFirst()
+{
+    var pq = new PriorityQueue();
+    pq.Enqueue("Low", 1);
+    pq.Enqueue("High", 5);
+    pq.Enqueue("Medium", 3);
+    Assert.AreEqual("High", pq.Dequeue());
+}
+
+[TestMethod]
+public void TestPriorityQueue_FIFOTieBreaker()
+{
+    var pq = new PriorityQueue();
+    pq.Enqueue("FirstHigh", 5);
+    pq.Enqueue("SecondHigh", 5);
+    Assert.AreEqual("FirstHigh", pq.Dequeue());
+}
+
 
     [TestMethod]
     // Scenario: 
