@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 
 public class BinarySearchTree : IEnumerable<int>
 {
@@ -11,12 +12,12 @@ public class BinarySearchTree : IEnumerable<int>
     {
         // Create new node
         Node newNode = new(value);
-        // If the list is empty, then point both head and tail to the new node.
+        // If the tree is empty, then set the _root to the new node.
         if (_root is null)
         {
             _root = newNode;
         }
-        // If the list is not empty, then only head will be affected.
+        // If the tree is not empty, then delegate the insertion to the root.
         else
         {
             _root.Insert(value);
@@ -24,7 +25,7 @@ public class BinarySearchTree : IEnumerable<int>
     }
 
     /// <summary>
-    /// Check to see if the tree contains a certain value
+    /// Check to see if the tree contains a certain value.
     /// </summary>
     /// <param name="value">The value to look for</param>
     /// <returns>true if found, otherwise false</returns>
@@ -43,7 +44,7 @@ public class BinarySearchTree : IEnumerable<int>
     }
 
     /// <summary>
-    /// Iterate forward through the BST
+    /// Iterate forward through the BST (smallest to largest).
     /// </summary>
     public IEnumerator<int> GetEnumerator()
     {
@@ -66,7 +67,7 @@ public class BinarySearchTree : IEnumerable<int>
     }
 
     /// <summary>
-    /// Iterate backward through the BST.
+    /// Iterate backward through the BST (largest to smallest).
     /// </summary>
     public IEnumerable Reverse()
     {
@@ -80,11 +81,17 @@ public class BinarySearchTree : IEnumerable<int>
 
     private void TraverseBackward(Node? node, List<int> values)
     {
-        // TODO Problem 3
+        if (node is not null)
+        {
+            // Visit the right subtree first for descending order.
+            TraverseBackward(node.Right, values);
+            values.Add(node.Data);
+            TraverseBackward(node.Left, values);
+        }
     }
 
     /// <summary>
-    /// Get the height of the tree
+    /// Get the height of the tree.
     /// </summary>
     public int GetHeight()
     {
@@ -96,11 +103,5 @@ public class BinarySearchTree : IEnumerable<int>
     public override string ToString()
     {
         return "<Bst>{" + string.Join(", ", this) + "}";
-    }
-}
-
-public static class IntArrayExtensionMethods {
-    public static string AsString(this IEnumerable array) {
-        return "<IEnumerable>{" + string.Join(", ", array.Cast<int>()) + "}";
     }
 }

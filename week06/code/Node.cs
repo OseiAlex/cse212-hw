@@ -1,3 +1,5 @@
+using System;
+
 public class Node
 {
     public int Data { get; set; }
@@ -11,11 +13,16 @@ public class Node
 
     public void Insert(int value)
     {
-        // TODO Start Problem 1
+        // Only allow unique values.
+        if (value == Data)
+        {
+            // Duplicate found. Do not insert again.
+            return;
+        }
 
         if (value < Data)
         {
-            // Insert to the left
+            // Insert to the left.
             if (Left is null)
                 Left = new Node(value);
             else
@@ -23,7 +30,7 @@ public class Node
         }
         else
         {
-            // Insert to the right
+            // Insert to the right.
             if (Right is null)
                 Right = new Node(value);
             else
@@ -33,13 +40,25 @@ public class Node
 
     public bool Contains(int value)
     {
-        // TODO Start Problem 2
-        return false;
+        if (value == Data)
+            return true;
+        else if (value < Data)
+        {
+            // If left subtree is null, the value is not found.
+            return Left != null && Left.Contains(value);
+        }
+        else
+        {
+            // If right subtree is null, the value is not found.
+            return Right != null && Right.Contains(value);
+        }
     }
 
     public int GetHeight()
     {
-        // TODO Start Problem 4
-        return 0; // Replace this line with the correct return statement(s)
+        int leftHeight = Left?.GetHeight() ?? 0;
+        int rightHeight = Right?.GetHeight() ?? 0;
+        // Height is defined as 1 (for the current node) plus the maximum of the subtree heights.
+        return 1 + Math.Max(leftHeight, rightHeight);
     }
 }
